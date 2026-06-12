@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ToneLayer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <h1>ToneLayer</h1>
+        <p>ND to NT</p>
+      </div>
+      <button id="loadSelection" class="icon-button" title="Load selected text">↙</button>
+    </header>
+
+    <section class="controls" aria-label="Rewrite settings">
+      <label>
+        <span>Profile</span>
+        <select id="profile">
+          <option>General ND</option>
+          <option>ADHD</option>
+          <option>Autism</option>
+          <option>AUDHD</option>
+          <option>PTSD</option>
+          <option>CPTSD</option>
+        </select>
+      </label>
+
+      <div class="level-group" aria-label="Rewrite level">
+        <button class="level" data-level="Light">Light</button>
+        <button class="level active" data-level="Medium">Medium</button>
+        <button class="level" data-level="Strong">Strong</button>
+      </div>
+    </section>
+
+    <label class="field">
+      <span>Original</span>
+      <textarea id="input" rows="6" placeholder="Select text on a page, then open ToneLayer."></textarea>
+    </label>
+
+    <button id="rewrite" class="primary">Rewrite</button>
+
+    <section id="resultPanel" class="result hidden" aria-live="polite">
+      <label class="field">
+        <span>Rewrite</span>
+        <textarea id="output" rows="6"></textarea>
+      </label>
+
+      <div class="actions">
+        <button id="copy">Copy</button>
+        <button id="replace">Replace selection</button>
+      </div>
+
+      <div id="teaching" class="teaching hidden">
+        <h2>Why this change</h2>
+        <p id="explanation"></p>
+      </div>
+    </section>
+
+    <p id="status" class="status"></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
