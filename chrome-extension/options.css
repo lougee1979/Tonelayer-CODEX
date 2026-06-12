@@ -62,3 +62,10 @@ button {
   font: inherit;
   font-weight: 750;
 }
+
+.legal {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}

@@ -195,3 +195,10 @@ textarea {
 .hidden {
   display: none;
 }
+
+.legal {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.3;
+}

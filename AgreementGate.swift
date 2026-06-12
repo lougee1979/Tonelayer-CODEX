@@ -104,7 +104,7 @@ Last updated: June 2026
 Thank you for testing ToneLayer. This agreement covers the ToneLayer app and the ToneLayer keyboard extension. By accepting and entering the app you agree to the following.
 
 1. INTELLECTUAL PROPERTY — THE APP
-ToneLayer, including its software, code, design, branding, AI prompts, and all associated content, is the exclusive intellectual property of the developer and is protected by copyright law. You may not copy, reproduce, modify, distribute, reverse-engineer, decompile, or create derivative works from ToneLayer or any of its components without explicit written permission from the developer. Unauthorized use constitutes copyright infringement and may result in legal action.
+ToneLayer, including its software, code, design, branding, AI prompts, butterfly mark, and all associated content, is the exclusive intellectual property of Alden Lougee and is protected by copyright, trademark, and other intellectual-property laws. ToneLayer™ and the ToneLayer butterfly mark are trademarks of Alden Lougee. You may not copy, reproduce, modify, distribute, reverse-engineer, decompile, publicly display, sublicense, or create derivative works from ToneLayer or any of its components without explicit written permission from the developer. Unauthorized use constitutes infringement and may result in legal action.
 
 2. YOU OWN WHAT YOU PROCESS
 You confirm that you have the right to share and process any text you enter into ToneLayer or the ToneLayer keyboard. Do not paste or submit text that belongs to someone else or that you do not have explicit permission to use. ToneLayer is not responsible for any copyright or intellectual-property claims arising from text you submit.

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2026 Alden Lougee. All rights reserved.
+ * ToneLayer(TM) and the ToneLayer butterfly mark are trademarks of Alden Lougee.
+ * Unauthorized copying, modification, distribution, or derivative use is prohibited.
+ */
+
 const appToken = document.getElementById("appToken");
 const save = document.getElementById("save");
 const status = document.getElementById("status");
