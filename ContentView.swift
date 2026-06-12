@@ -99,7 +99,7 @@ struct ContentView: View {
 
     private let serverURL = "https://tonelayer-server-production.up.railway.app/rewrite"
     private let decodeURL = "https://tonelayer-server-production.up.railway.app/decode"
-    private let appToken  = "d731136d97cdd46453e7581465537e0d9aee811512b885c2"
+    private let appToken  = "REPLACE_WITH_TONELAYER_APP_TOKEN"
 
     private let dailyTips: [(title: String, body: String)] = [
         (

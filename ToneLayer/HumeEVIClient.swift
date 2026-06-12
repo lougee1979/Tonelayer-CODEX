@@ -22,8 +22,8 @@ final class HumeEVIClient: NSObject, ObservableObject {
     @Published var topEmotions: [(name: String, score: Double)] = []
     @Published var rawLog: [String] = []
 
-    private let apiKey    = "iGJur1J59jimvanwNivAtw1tCyUkEKZA77j9MUSHTApvUwUN"
-    private let secretKey = "IMcIJVkuFypeG3x3LQHOy1NmRvZYoRTg1EGVAyodQNCPQ6GGO8HW9TEG0098az2Z"
+    private let apiKey    = "REPLACE_WITH_HUME_API_KEY"
+    private let secretKey = "REPLACE_WITH_HUME_SECRET_KEY"
 
     private var webSocketTask: URLSessionWebSocketTask?
     private var urlSession: URLSession?

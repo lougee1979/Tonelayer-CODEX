@@ -18,7 +18,7 @@ enum AppConfig {
     static let serverURL    = "https://tonelayer-server-production.up.railway.app/rewrite"
     static let decodeURL    = "https://tonelayer-server-production.up.railway.app/decode"
     static let analyticsURL = "https://tonelayer-server-production.up.railway.app/analytics"
-    static let appToken     = "d731136d97cdd46453e7581465537e0d9aee811512b885c2"
+    static let appToken     = "REPLACE_WITH_TONELAYER_APP_TOKEN"
 }
 
 extension View {
