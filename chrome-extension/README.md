@@ -1,6 +1,12 @@
 # ToneLayer Chrome Extension
 
-This Manifest V3 extension rewrites selected browser text through the same ToneLayer `/rewrite` service used by the iOS app.
+This Manifest V3 extension rewrites selected browser text, decodes communication patterns, and translates between ND-readable and NT-readable styles through the same ToneLayer service used by the iOS app.
+
+## Features
+
+- **ND→NT**: rewrites neurodivergent communication into NT-readable wording.
+- **Decoder**: explains what a received message may mean and flags communication patterns.
+- **NT→ND**: turns polished NT wording into more explicit, direct ND-readable communication.
 
 ## Test locally
 
@@ -10,7 +16,7 @@ This Manifest V3 extension rewrites selected browser text through the same ToneL
 4. Select this folder: `chrome-extension`.
 5. Click **Details** for ToneLayer, open **Extension options**, and paste the ToneLayer access token from your subscribed account.
 6. Open any page with selectable text.
-7. Select text, click the ToneLayer extension icon, then click **Rewrite**.
+7. Select text, click the ToneLayer extension icon, choose **ND→NT**, **Decoder**, or **NT→ND**, then run the tool.
 
 The popup can copy the rewrite or replace the selected text when the current page allows content scripts to edit that field.
 

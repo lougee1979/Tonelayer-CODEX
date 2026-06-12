@@ -13,14 +13,20 @@
         <img src="icons/icon48.png" alt="" class="brand-icon">
         <div>
           <h1>ToneLayer</h1>
-          <p>ND to NT</p>
+          <p id="modeSubtitle">ND to NT</p>
         </div>
       </div>
       <button id="loadSelection" class="icon-button" title="Load selected text">↙</button>
     </header>
 
-    <section class="controls" aria-label="Rewrite settings">
-      <label>
+    <nav class="mode-tabs" aria-label="ToneLayer tools">
+      <button class="mode-tab active" data-mode="rewrite">ND→NT</button>
+      <button class="mode-tab" data-mode="decode">Decoder</button>
+      <button class="mode-tab" data-mode="ntnd">NT→ND</button>
+    </nav>
+
+    <section class="controls" aria-label="Tool settings">
+      <label id="profileControl">
         <span>Profile</span>
         <select id="profile">
           <option>General ND</option>
@@ -32,23 +38,34 @@
         </select>
       </label>
 
-      <div class="level-group" aria-label="Rewrite level">
+      <label id="contactControl" class="hidden">
+        <span>Contact</span>
+        <input id="contact" type="text" placeholder="Optional">
+      </label>
+
+      <div id="levelGroup" class="level-group" aria-label="Rewrite level">
         <button class="level" data-level="Light">Light</button>
         <button class="level active" data-level="Medium">Medium</button>
         <button class="level" data-level="Strong">Strong</button>
       </div>
+
+      <div id="sensitivityGroup" class="level-group hidden" aria-label="Decoder sensitivity">
+        <button class="sensitivity" data-sensitivity="Light">Light</button>
+        <button class="sensitivity active" data-sensitivity="Medium">Medium</button>
+        <button class="sensitivity" data-sensitivity="Strong">Strong</button>
+      </div>
     </section>
 
     <label class="field">
-      <span>Original</span>
+      <span id="inputLabel">Original</span>
       <textarea id="input" rows="6" placeholder="Select text on a page, then open ToneLayer."></textarea>
     </label>
 
-    <button id="rewrite" class="primary">Rewrite</button>
+    <button id="run" class="primary">Rewrite</button>
 
     <section id="resultPanel" class="result hidden" aria-live="polite">
       <label class="field">
-        <span>Rewrite</span>
+        <span id="outputLabel">Rewrite</span>
         <textarea id="output" rows="6"></textarea>
       </label>
 
@@ -57,8 +74,10 @@
         <button id="replace">Replace selection</button>
       </div>
 
+      <div id="metaPanel" class="meta hidden"></div>
+
       <div id="teaching" class="teaching hidden">
-        <h2>Why this change</h2>
+        <h2 id="teachingTitle">Why this change</h2>
         <p id="explanation"></p>
       </div>
     </section>

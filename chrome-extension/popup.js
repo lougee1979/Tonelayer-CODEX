@@ -6,24 +6,74 @@
 
 const els = {
   profile: document.getElementById("profile"),
+  contact: document.getElementById("contact"),
+  profileControl: document.getElementById("profileControl"),
+  contactControl: document.getElementById("contactControl"),
+  levelGroup: document.getElementById("levelGroup"),
+  sensitivityGroup: document.getElementById("sensitivityGroup"),
+  modeSubtitle: document.getElementById("modeSubtitle"),
+  inputLabel: document.getElementById("inputLabel"),
+  outputLabel: document.getElementById("outputLabel"),
   input: document.getElementById("input"),
   output: document.getElementById("output"),
-  rewrite: document.getElementById("rewrite"),
+  run: document.getElementById("run"),
   copy: document.getElementById("copy"),
   replace: document.getElementById("replace"),
   loadSelection: document.getElementById("loadSelection"),
   resultPanel: document.getElementById("resultPanel"),
   teaching: document.getElementById("teaching"),
+  teachingTitle: document.getElementById("teachingTitle"),
   explanation: document.getElementById("explanation"),
+  metaPanel: document.getElementById("metaPanel"),
   status: document.getElementById("status"),
-  levels: [...document.querySelectorAll(".level")]
+  levels: [...document.querySelectorAll(".level")],
+  sensitivities: [...document.querySelectorAll(".sensitivity")],
+  modeTabs: [...document.querySelectorAll(".mode-tab")]
+};
+
+const MODE_COPY = {
+  rewrite: {
+    subtitle: "ND to NT",
+    inputLabel: "Original",
+    outputLabel: "Rewrite",
+    action: "Rewrite",
+    busy: "Rewriting...",
+    placeholder: "Select text on a page, then open ToneLayer."
+  },
+  decode: {
+    subtitle: "Pattern Decoder",
+    inputLabel: "Message to decode",
+    outputLabel: "What it may mean",
+    action: "Decode patterns",
+    busy: "Decoding...",
+    placeholder: "Paste a message you received, or select it on a page."
+  },
+  ntnd: {
+    subtitle: "NT to ND",
+    inputLabel: "NT version",
+    outputLabel: "ND-readable version",
+    action: "Translate to ND",
+    busy: "Translating...",
+    placeholder: "Paste polished NT wording to make it more direct, explicit, and ND-readable."
+  }
 };
 
 let selectedLevel = "Medium";
+let selectedSensitivity = "Medium";
+let currentMode = "rewrite";
 
-document.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", async () => {
   await loadSettings();
+  applyMode(currentMode);
   await loadSelection();
+});
+
+els.modeTabs.forEach((button) => {
+  button.addEventListener("click", async () => {
+    currentMode = button.dataset.mode;
+    await chrome.storage.sync.set({ mode: currentMode });
+    applyMode(currentMode);
+  });
 });
 
 els.levels.forEach((button) => {
@@ -34,22 +84,61 @@ els.levels.forEach((button) => {
   });
 });
 
+els.sensitivities.forEach((button) => {
+  button.addEventListener("click", async () => {
+    selectedSensitivity = button.dataset.sensitivity;
+    els.sensitivities.forEach((item) => item.classList.toggle("active", item === button));
+    await chrome.storage.sync.set({ sensitivity: selectedSensitivity });
+  });
+});
+
 els.profile.addEventListener("change", () => {
   chrome.storage.sync.set({ profile: els.profile.value });
 });
 
+els.contact.addEventListener("change", () => {
+  chrome.storage.sync.set({ contact: els.contact.value });
+});
+
 els.loadSelection.addEventListener("click", loadSelection);
-els.rewrite.addEventListener("click", runRewrite);
-els.copy.addEventListener("click", copyRewrite);
+els.run.addEventListener("click", runCurrentMode);
+els.copy.addEventListener("click", copyOutput);
 els.replace.addEventListener("click", replaceSelection);
 
 async function loadSettings() {
-  const settings = await chrome.storage.sync.get({ profile: "General ND", level: "Medium" });
-  els.profile.value = settings.profile;
-  selectedLevel = settings.level;
-  els.levels.forEach((button) => {
-    button.classList.toggle("active", button.dataset.level === selectedLevel);
+  const settings = await chrome.storage.sync.get({
+    profile: "General ND",
+    level: "Medium",
+    sensitivity: "Medium",
+    mode: "rewrite",
+    contact: ""
   });
+  els.profile.value = settings.profile;
+  els.contact.value = settings.contact;
+  selectedLevel = settings.level;
+  selectedSensitivity = settings.sensitivity;
+  currentMode = ["rewrite", "decode", "ntnd"].includes(settings.mode) ? settings.mode : "rewrite";
+  els.levels.forEach((button) => button.classList.toggle("active", button.dataset.level === selectedLevel));
+  els.sensitivities.forEach((button) => button.classList.toggle("active", button.dataset.sensitivity === selectedSensitivity));
+}
+
+function applyMode(mode) {
+  const copy = MODE_COPY[mode];
+  els.modeTabs.forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
+  els.modeSubtitle.textContent = copy.subtitle;
+  els.inputLabel.textContent = copy.inputLabel;
+  els.outputLabel.textContent = copy.outputLabel;
+  els.input.placeholder = copy.placeholder;
+  els.run.textContent = copy.action;
+  els.profileControl.classList.toggle("hidden", mode === "decode");
+  els.contactControl.classList.toggle("hidden", mode !== "decode");
+  els.levelGroup.classList.toggle("hidden", mode === "decode");
+  els.sensitivityGroup.classList.toggle("hidden", mode !== "decode");
+  els.replace.classList.toggle("hidden", mode === "decode");
+  els.resultPanel.classList.add("hidden");
+  els.metaPanel.classList.add("hidden");
+  els.teaching.classList.add("hidden");
+  setStatus("");
 }
 
 async function loadSelection() {
@@ -73,7 +162,7 @@ async function loadSelection() {
   }
 }
 
-async function runRewrite() {
+async function runCurrentMode() {
   const text = els.input.value.trim();
   if (!text) {
     setStatus("Select or type text first.");
@@ -81,40 +170,76 @@ async function runRewrite() {
   }
 
   setBusy(true);
-  setStatus("Rewriting...");
+  setStatus(MODE_COPY[currentMode].busy);
 
-  const response = await chrome.runtime.sendMessage({
-    type: "TONELAYER_REWRITE",
-    payload: {
-      text,
-      profile: els.profile.value,
-      level: selectedLevel
-    }
-  });
+  const response = currentMode === "decode"
+    ? await chrome.runtime.sendMessage({
+        type: "TONELAYER_DECODE",
+        payload: {
+          text,
+          contact: els.contact.value,
+          sensitivity: selectedSensitivity
+        }
+      })
+    : await chrome.runtime.sendMessage({
+        type: "TONELAYER_REWRITE",
+        payload: {
+          text,
+          profile: els.profile.value,
+          level: selectedLevel,
+          direction: currentMode === "ntnd" ? "nt_to_nd" : "nd_to_nt"
+        }
+      });
 
   setBusy(false);
 
   if (!response?.ok) {
-    setStatus(response?.error || "Rewrite failed.");
+    setStatus(response?.error || "ToneLayer failed.");
     return;
   }
 
-  const result = response.result;
-  els.output.value = result.rewrite;
-  els.explanation.textContent = result.explanation || "No teaching note returned.";
-  els.teaching.classList.toggle("hidden", !result.explanation);
-  els.resultPanel.classList.remove("hidden");
-
-  const note = result.distortions?.length
-    ? `Rewrite ready. Pause flag: ${result.distortions.join(", ")}.`
-    : "Rewrite ready.";
-  setStatus(note);
+  renderResult(response.result);
 }
 
-async function copyRewrite() {
+function renderResult(result) {
+  els.output.value = result.text || "";
+  els.resultPanel.classList.remove("hidden");
+
+  if (result.kind === "decode") {
+    renderDecoderMeta(result);
+    els.teaching.classList.toggle("hidden", !result.baseline);
+    els.teachingTitle.textContent = result.tentative ? "Baseline note" : "Context note";
+    els.explanation.textContent = result.baseline;
+    setStatus(result.patterns?.length ? "Patterns decoded." : "Decoded with no major pattern flags.");
+    return;
+  }
+
+  els.metaPanel.classList.toggle("hidden", !result.distortions?.length);
+  els.metaPanel.innerHTML = result.distortions?.length
+    ? `<h2>Pattern flags</h2><div class="chips">${result.distortions.map(escapeHTML).map((flag) => `<span>${flag}</span>`).join("")}</div>`
+    : "";
+  els.teaching.classList.toggle("hidden", !result.explanation);
+  els.teachingTitle.textContent = result.kind === "ntnd" ? "Translation note" : "Why this change";
+  els.explanation.textContent = result.explanation || "";
+  setStatus(result.kind === "ntnd" ? "NT-to-ND translation ready." : "Rewrite ready.");
+}
+
+function renderDecoderMeta(result) {
+  const parts = [];
+  if (result.patterns?.length) {
+    parts.push(`<h2>Pattern flags</h2><div class="chips">${result.patterns.map(escapeHTML).map((flag) => `<span>${flag}</span>`).join("")}</div>`);
+  }
+  if (result.communicationStyle) {
+    parts.push(`<h2>Communication style</h2><p>${escapeHTML(result.communicationStyle)}</p>`);
+  }
+  els.metaPanel.innerHTML = parts.join("");
+  els.metaPanel.classList.toggle("hidden", parts.length === 0);
+}
+
+async function copyOutput() {
   const text = els.output.value.trim();
   if (!text) {
-    setStatus("No rewrite to copy.");
+    setStatus("No result to copy.");
     return;
   }
 
@@ -125,7 +250,7 @@ async function copyRewrite() {
 async function replaceSelection() {
   const text = els.output.value.trim();
   if (!text) {
-    setStatus("No rewrite to insert.");
+    setStatus("No translation to insert.");
     return;
   }
 
@@ -152,11 +277,21 @@ async function getActiveTab() {
 }
 
 function setBusy(isBusy) {
-  els.rewrite.disabled = isBusy;
+  els.run.disabled = isBusy;
   els.loadSelection.disabled = isBusy;
-  els.rewrite.textContent = isBusy ? "Rewriting..." : "Rewrite";
+  els.run.textContent = isBusy ? MODE_COPY[currentMode].busy : MODE_COPY[currentMode].action;
 }
 
 function setStatus(message) {
   els.status.textContent = message;
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>'"]/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;"
+  }[char]));
 }

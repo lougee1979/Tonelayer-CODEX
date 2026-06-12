@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ToneLayer",
-  "version": "0.1.0",
-  "description": "Rewrite selected text from ND style into NT-readable communication.",
+  "version": "0.2.0",
+  "description": "Rewrite, decode patterns, and translate communication between ND and NT styles.",
   "action": {
     "default_popup": "popup.html",
     "default_title": "ToneLayer",

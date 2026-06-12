@@ -2,13 +2,13 @@
 
 ## Short description
 
-ToneLayer rewrites selected text into clearer NT-readable communication for neurodivergent writers.
+ToneLayer rewrites, decodes patterns, and translates communication between ND and NT styles.
 
 ## Detailed description
 
 ToneLayer helps neurodivergent users translate written communication into clearer neurotypical-readable wording while preserving meaning, voice, and intent.
 
-Select text on a page, open ToneLayer, choose a profile and rewrite strength, then generate a clearer version. You can copy the rewrite or replace the selected text where the page allows it.
+Select text on a page, open ToneLayer, then choose one of three tools: ND-to-NT rewrite, Pattern Decoder, or NT-to-ND translation. You can copy results or replace selected text where the page allows it.
 
 ## Payment disclosure
 
@@ -29,3 +29,11 @@ ToneLayer sends the selected text you choose to rewrite to the ToneLayer server 
 Seller: Alden Lougee / ToneLayer
 
 Google is not the seller of ToneLayer subscriptions and does not process ToneLayer subscription payments.
+
+## Store assets
+
+Use this butterfly icon for the Chrome Web Store item icon:
+
+```text
+chrome-extension/store-assets/store-icon-128.png
+```
