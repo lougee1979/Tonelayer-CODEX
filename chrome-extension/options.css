@@ -69,3 +69,53 @@ button {
   font-size: 11px;
   line-height: 1.4;
 }
+
+.billing {
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #faf8ff;
+}
+
+.billing h2 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.billing p,
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.billing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: var(--violet);
+  color: #fff;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.button-link.secondary {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+.hint {
+  margin-top: 6px;
+}

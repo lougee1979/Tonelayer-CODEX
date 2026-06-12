@@ -28,7 +28,7 @@ async function rewrite(payload) {
 
   const { appToken = "" } = await chrome.storage.sync.get({ appToken: "" });
   if (!appToken.trim()) {
-    throw new Error("Add the ToneLayer app token in extension options first.");
+    throw new Error("Subscribe or sign in, then add your ToneLayer access token in extension options.");
   }
 
   const controller = new AbortController();

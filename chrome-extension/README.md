@@ -8,11 +8,15 @@ This Manifest V3 extension rewrites selected browser text through the same ToneL
 2. Turn on **Developer mode**.
 3. Click **Load unpacked**.
 4. Select this folder: `chrome-extension`.
-5. Click **Details** for ToneLayer, open **Extension options**, and paste the ToneLayer app token.
+5. Click **Details** for ToneLayer, open **Extension options**, and paste the ToneLayer access token from your subscribed account.
 6. Open any page with selectable text.
 7. Select text, click the ToneLayer extension icon, then click **Rewrite**.
 
 The popup can copy the rewrite or replace the selected text when the current page allows content scripts to edit that field.
+
+## Billing model
+
+ToneLayer is designed as a free-to-install Chrome extension with paid rewrite access. Users subscribe through ToneLayer billing, then paste their account access token in extension options. See `BILLING.md` for Stripe setup steps and `STORE_LISTING.md` for Chrome Web Store payment disclosure copy.
 
 ## Legal notice
 

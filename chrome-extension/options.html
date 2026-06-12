@@ -9,10 +9,21 @@
 <body>
   <main class="shell">
     <h1>ToneLayer Settings</h1>
+
+    <section class="billing">
+      <h2>Subscription</h2>
+      <p>ToneLayer requires an active plan for rewrite access. Subscribe or manage billing through ToneLayer, then paste your account access token below.</p>
+      <div class="billing-actions">
+        <a class="button-link" href="https://tonelayer.app/pricing" target="_blank" rel="noreferrer">Subscribe</a>
+        <a class="button-link secondary" href="https://tonelayer.app/account/billing" target="_blank" rel="noreferrer">Manage billing</a>
+      </div>
+    </section>
+
     <label>
-      <span>App token</span>
+      <span>Access token</span>
       <input id="appToken" type="password" autocomplete="off">
     </label>
+    <p class="hint">This token should come from your ToneLayer account after subscription. Do not paste Stripe secret keys here.</p>
     <button id="save">Save</button>
     <p id="status"></p>
     <p class="legal">© 2026 Alden Lougee. All rights reserved. ToneLayer™ and the butterfly mark are trademarks of Alden Lougee. Unauthorized copying, modification, distribution, or derivative use is prohibited.</p>
